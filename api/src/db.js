@@ -3,7 +3,7 @@ const { Sequelize, Op } = require("sequelize");
 const fs = require("fs");
 const axios = require("axios");
 const path = require("path");
-const { DB_USER, DB_PASSWORD, DB_HOST, ApiKey } = process.env;
+const { DB_USER, DB_PASSWORD, DB_HOST, API_KEY } = process.env;
 
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/videogames`,
@@ -26,7 +26,7 @@ fs.readdirSync(path.join(__dirname, "/models"))
     modelDefiners.push(require(path.join(__dirname, "/models", file)));
   });
 
-// Injectamos la conexion (sequelize) a todos los modelos
+// Inyectamos la conexion (sequelize) a todos los modelos
 modelDefiners.forEach((model) => model(sequelize));
 // Capitalizamos los nombres de los modelos ie: product => Product
 let entries = Object.entries(sequelize.models);
@@ -48,7 +48,7 @@ Genre.belongsToMany(Videogame, { through: "vgame_genre" });
 //Llenar la tabla de generos con la Api.
 const popgenres = async () => {
   const apigenres = await axios.get(
-    `https://api.rawg.io/api/genres?key=${ApiKey}`
+    `https://api.rawg.io/api/genres?key=${API_KEY}`
   );
   const genres = apigenres.data.results.map((g) => g.name);
   //Añadir todos los generos a la BD
@@ -63,6 +63,6 @@ popgenres();
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importar la conexión { conn } = require('./db.js');
-  apikey: ApiKey,
+  apikey: API_KEY,
   Op,
 };
