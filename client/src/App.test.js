@@ -8,9 +8,6 @@ import { Provider } from "react-redux";
 import App from "./App";
 import HomePage from "./components/HomePage/HomePage";
 import LandingPage from "./components/LandingPage/LandingPage";
-//import TodoDetail from './components/TodoDetail/TodoDetail';
-
-//import Nav from './components/Nav/Nav';
 
 configure({ adapter: new Adapter() });
 

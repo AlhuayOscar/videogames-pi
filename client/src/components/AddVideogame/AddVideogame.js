@@ -67,7 +67,7 @@ export default function AddVideogame() {
     if (!input.name) {
       return alert("Name is required");
     }
-    if (!/^\d{4}\-\d{1,2}\-\d{1,2}$/.test(input.reldate)) {
+if (!/^\d{4}-\d{1,2}-\d{1,2}$/.test(input.reldate)) {
       return alert(
         "Wrong released date format. Should be YYYY-MM-DD OR YYYY-M-D"
       );
